@@ -24,7 +24,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
 import os
 import sys
-from pdb import Pdb
+#from pdb import Pdb
+from IPython.core.debugger import Tracer, Pdb
 
 class Error(Exception): pass
 
@@ -34,7 +35,7 @@ def trace():
     works with nose testing framework (uses sys.__stdout__ for output)
     """
     frame = sys._getframe().f_back
-    pdb = Pdb(stdout=sys.__stdout__)
+    pdb = Pdb(color_scheme='Linux', stdout=sys.__stdout__)
     pdb.set_trace(frame)
 
 def setbreak(line=None, file=None, cond=None, temp=0, frame=None, throw=False):
@@ -71,7 +72,7 @@ def setbreak(line=None, file=None, cond=None, temp=0, frame=None, throw=False):
         sys.__stdout__.write("breaking in: %s" % file)
     if file.endswith(".pyc"):
         file = file[:-1]
-    pdb = Pdb(stdout=sys.__stdout__) # use sys.__stdout__ to work with nose tests
+    pdb = Pdb(color_scheme='Linux', stdout=sys.__stdout__) # use sys.__stdout__ to work with nose tests
     pdb.reset()
     pdb.curframe = frame
     while frame:
